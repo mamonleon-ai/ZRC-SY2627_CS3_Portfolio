@@ -1,0 +1,59 @@
+class Patient:
+    def __init__(self, name, bill_amount):
+        self._name = name
+        self._bill_amount = bill_amount
+
+    def get_name(self):
+        return self._name
+
+    def set_name(self, value):
+        self._name = value
+
+    def get_bill_amount(self):
+        return self._bill_amount
+
+    def set_bill_amount(self, value):
+        if value < 0:
+            raise ValueError("Bill amount cannot be negative.")
+        self._bill_amount = value
+
+    @property
+    def name(self):
+        return self.get_name()
+
+    @name.setter
+    def name(self, value):
+        self.set_name(value)
+
+    @property
+    def bill_amount(self):
+        return self.get_bill_amount()
+
+    @bill_amount.setter
+    def bill_amount(self, value):
+        self.set_bill_amount(value)
+
+    def calculate_bill(self):
+        return self.get_bill_amount()
+
+
+class SeniorPatient(Patient):
+    def calculate_bill(self):
+        discount = 0.20 * self.get_bill_amount()
+        return self.get_bill_amount() - discount
+
+
+class PhilHealthPatient(Patient):
+    def calculate_bill(self):
+        discount = 0.15 * self.get_bill_amount()
+        return self.get_bill_amount() - discount
+
+
+if __name__ == "__main__":
+    regular_patient = Patient("Nuno Mendez", 2500)
+    senior_patient = SeniorPatient("Roberto Carlos", 2500)
+    philhealth_patient = PhilHealthPatient("Pepi Lopez", 2500)
+
+    print(f"Regular Patient: {regular_patient.name} - Total Bill: PHP {regular_patient.calculate_bill():.2f}")
+    print(f"Senior Patient: {senior_patient.name} - Total Bill: PHP {senior_patient.calculate_bill():.2f}")
+    print(f"PhilHealth Patient: {philhealth_patient.name} - Total Bill: PHP {philhealth_patient.calculate_bill():.2f}")
